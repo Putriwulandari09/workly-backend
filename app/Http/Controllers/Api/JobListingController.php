@@ -44,17 +44,29 @@ class JobListingController extends Controller
     }
 
     // PUT /api/jobs/{id}
-    public function update(Request $request, string $id)
-    {
-        $job = JobListing::findOrFail($id);
+public function update(Request $request, string $id)
+{
+    $job = JobListing::findOrFail($id);
 
-        $job->update($request->all());
+    $validated = $request->validate([
+        'category_id' => 'required',
+        'judul' => 'required',
+        'perusahaan' => 'required',
+        'lokasi' => 'required',
+        'tipe_pekerjaan' => 'required',
+        'deskripsi' => 'required',
+        'persyaratan' => 'required',
+        'cara_mendaftar' => 'required',
+        'batas_pendaftaran' => 'required',
+    ]);
 
-        return response()->json([
-            'message' => 'Lowongan berhasil diperbarui',
-            'data' => $job
-        ]);
-    }
+    $job->update($validated);
+
+    return response()->json([
+        'message' => 'Lowongan berhasil diperbarui',
+        'data' => $job
+    ]);
+}
 
     // DELETE /api/jobs/{id}
     public function destroy(string $id)
