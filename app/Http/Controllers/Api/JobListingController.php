@@ -11,7 +11,7 @@ class JobListingController extends Controller
     // GET /api/jobs
     public function index()
     {
-        return JobListing::all();
+        return JobListing::with('category')->get();
     }
 
     // POST /api/jobs
@@ -38,9 +38,9 @@ class JobListingController extends Controller
     }
 
     // GET /api/jobs/{id}
-    public function show(string $id)
+    public function show($id)
     {
-        return JobListing::findOrFail($id);
+        return JobListing::with('category')->findOrFail($id);
     }
 
     // PUT /api/jobs/{id}
