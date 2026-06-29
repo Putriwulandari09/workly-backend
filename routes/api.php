@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JobListingController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\DashboardController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -18,7 +19,5 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-// Example admin-only route
-Route::middleware(['auth:sanctum', 'role:admin'])->get('/admin/dashboard', function (Request $request) {
-    return response()->json(['message' => 'Admin dashboard']);
-});
+// Dashboard Admin
+Route::get('/dashboard', [DashboardController::class, 'index']);
